@@ -1,9 +1,11 @@
 ﻿<!DOCTYPE html>
+<!--必须使用html5的doctype-->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
     <meta charset="utf-8" />
+    <!--下面4个js引用顺序不能乱-->
     <script src="/Scripts/jquery-1.6.4.min.js"></script>
     <!--json2.js必须加上不然低版本ie如ie7无法解析json-->
     <script src="/Scripts/json2.js"></script>
@@ -33,6 +35,7 @@
                 $('#messageBox').append('<li><strong style="color:green">' + htmlEncode(name.replace($.connection.hub.id, '我')) + '</strong>:' + htmlEncode(message) + '</li>');
             }
 
+            //自定义刷新connectionId的方法，用于刷新connectionId列表的下拉框元素$('#connectionIdsSelect')和connectionId列表的ul元素$('#connectionIdsBox')
             chat.client.refreshConnectionIds = function (data) {
 
                 $('#connectionIdsSelect').html('<option value="">所有人</option>');
@@ -52,7 +55,7 @@
                 }
             }
 
-
+            //如果group，即“所属组名”不为空，则以QueryString来存储group
             if ($('#group').val() != '') $.connection.hub.qs = "group=" + $('#group').val();
 
 

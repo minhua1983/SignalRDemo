@@ -72,10 +72,7 @@ D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\zh-Hans\System.Web.Http.WebHo
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\obj\Release\SignalRDemo.UI.csprojResolveAssemblyReference.cache
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\obj\Release\SignalRDemo.UI.dll
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\obj\Release\SignalRDemo.UI.pdb
-D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\Dapper.dll
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\Microsoft.AspNet.SignalR.Client.dll
-D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\Dapper.pdb
-D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\Dapper.xml
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\Microsoft.AspNet.SignalR.Client.xml
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\zh-Hans\Microsoft.AspNet.SignalR.Core.resources.dll
 D:\minhua\workspace\SignalRDemo\SignalRDemo.UI\bin\zh-Hans\Microsoft.AspNet.SignalR.SystemWeb.resources.dll
