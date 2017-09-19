@@ -106,7 +106,7 @@
       <publishTime>06/18/2015 20:19:46</publishTime>
     </File>
     <File Include="bin/SignalRDemo.UI.dll">
-      <publishTime>09/13/2017 19:47:34</publishTime>
+      <publishTime>09/15/2017 16:41:45</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>01/28/2015 04:02:42</publishTime>
@@ -177,14 +177,20 @@
     <File Include="bin/zh-Hans/System.Web.Webpages.resources.dll">
       <publishTime>01/28/2015 04:04:32</publishTime>
     </File>
+    <File Include="Connection.json">
+      <publishTime>09/15/2017 11:27:55</publishTime>
+    </File>
     <File Include="Global.asax">
       <publishTime>09/11/2017 14:47:47</publishTime>
     </File>
     <File Include="index.html">
       <publishTime>09/13/2017 18:38:21</publishTime>
     </File>
+    <File Include="index9000.html">
+      <publishTime>09/15/2017 17:14:54</publishTime>
+    </File>
     <File Include="packages.config">
-      <publishTime>09/13/2017 19:00:01</publishTime>
+      <publishTime>09/14/2017 16:52:12</publishTime>
     </File>
     <File Include="scripts/ai.0.22.9-build00167.js">
       <publishTime>09/11/2017 14:47:51</publishTime>
@@ -211,7 +217,7 @@
       <publishTime>09/11/2017 14:47:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/13/2017 19:47:34</publishTime>
+      <publishTime>09/14/2017 20:44:28</publishTime>
     </File>
   </ItemGroup>
 </Project>

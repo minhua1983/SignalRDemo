@@ -1,28 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Data.SqlClient;
-using System.Data;
-using System.Configuration;
 using System.Text;
-using System.IO;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Configuration;
+using System.Threading;
 using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.AspNet.SignalR.Transports;
-using Dapper;
+using Microsoft.Owin.Hosting;
+using Owin;
+using Microsoft.Owin.Cors;
 
-namespace SignalRDemo.UI
+namespace SignalRDemo.Core
 {
-    /// <summary>
-    /// 自定义Hub类
-    /// </summary>
-    //[HubName("myHub")]
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // This will *ONLY* bind to localhost, if you want to bind to all addresses
+            // use http://*:8080 to bind to all addresses. 
+            // See http://msdn.microsoft.com/en-us/library/system.net.httplistener.aspx 
+            // for more information.
+            //string url = "http://localhost:9000";
+            string url = "http://192.168.137.128:9000";
+
+            using (WebApp.Start<Startup>(url))
+            {
+                Console.WriteLine("Server running on {0}", url);
+
+                Thread t = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        Thread.Sleep(10000);
+                        MyHub.RefreshConnectionIds();
+                        Console.WriteLine("RefreshConnectionIds");
+                    }
+                });
+                t.Start();
+
+                Console.ReadLine();
+            }
+        }
+    }
+    class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            app.UseCors(CorsOptions.AllowAll);
+            app.MapSignalR();
+        }
+    }
     public class MyHub : Hub
     {
-        readonly string connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
+        //readonly string connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
 
         /*
         /// <summary>

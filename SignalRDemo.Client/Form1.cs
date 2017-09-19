@@ -55,6 +55,11 @@ namespace SignalRDemo.Client
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 //手动关闭应用
+                //释放Hub连接对象，会调用Hub程序的OnDisconnected方法
+                if (hubConnection != null)
+                {
+                    hubConnection.Dispose();
+                }
             }
             else
             {
@@ -62,11 +67,7 @@ namespace SignalRDemo.Client
                 //记录异常以后上线后补发信息
             }
 
-            //释放Hub连接对象，会调用Hub程序的OnDisconnected方法
-            if (hubConnection != null)
-            {
-                hubConnection.Dispose();
-            }
+            
         }
 
         /// <summary>
