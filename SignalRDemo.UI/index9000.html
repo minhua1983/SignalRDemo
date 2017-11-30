@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<!--必须使用html5的doctype-->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <!--下面4个js引用顺序不能乱-->
+    <script src="/Scripts/jquery-1.6.4.min.js"></script>
+    <!--json2.js必须加上不然低版本ie如ie7无法解析json-->
+    <script src="/Scripts/json2.js"></script>
+    <script src="/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script>
+        $(function () {
+
+
+        });
+
+        var groupPrefix = 'GROUP:';
+
+        //为显示的消息进行html编码
+        function htmlEncode(value) {
+            var encodeValue = $('<div/>').text(value).html();
+            return encodeValue;
+        }
+
+        function connectToHost() {
+            $("#message").val('大家好，我是').focus();
+            //引用自动生成的集线器代理
+            var chat = $.connection.myHub;
+            //定义服务器调用的客户端sendMessage来显示新消息
+            chat.client.receiveMessage = function (name, message) {
+                //向页面添加消息
+                $('#messageBox').append('<li><strong style="color:green">' + htmlEncode(name.replace($.connection.hub.id, '我')) + '</strong>:' + htmlEncode(message) + '</li>');
+            }
+
+            //自定义刷新connectionId的方法，用于刷新connectionId列表的下拉框元素$('#connectionIdsSelect')和connectionId列表的ul元素$('#connectionIdsBox')
+            chat.client.refreshConnectionIds = function (data) {
+
+                $('#connectionIdsSelect').html('<option value="">所有人</option>');
+                if ($('#group').val() != '') $('#connectionIdsSelect').append('<option value="' + $('#group').val() + '">' + groupPrefix + $('#group').val() + '</option>');
+                $('#connectionIdsBox').html('');
+
+                for (var i = 0; i < data.length; i++) {
+                    
+                    if (data[i] != $.connection.hub.id) {
+                        $('#connectionIdsSelect').append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                        $('#connectionIdsBox').append('<li>' + data[i] + '</li>');
+                    }
+                    else {
+
+                        $('#connectionIdsBox').append('<li>' + data[i] + '（我）</li>');
+                    }
+                }
+            }
+
+            //如果group，即“所属组名”不为空，则以QueryString来存储group
+            if ($('#group').val() != '') $.connection.hub.qs = "group=" + $('#group').val();
+            //设置hub的url
+            $.connection.hub.url = 'http://192.168.137.128:9000/signalr';
+
+            //设置焦点到输入框
+            $('#message').focus();
+            //开始连接服务器（此处$.connection.hub和上面的$.connection.myHub不是同一个对象，此处是固定写法）
+            $.connection.hub.start().done(function () {
+                $('#connectionIdSpan').html($.connection.hub.id);
+                $('#sendmessage').click(function () {
+                    if ($('#connectionIdsSelect').val() != '') {
+                        //调用服务器端集线器的SendAll方法来发送指定某人
+                        chat.server.sendOne($('#connectionIdsSelect').val(), $('#message').val());
+                    }
+                    else {
+                        //调用服务器端集线器的SendAll方法来发送所有人
+                        chat.server.sendAll($('#message').val());
+                    }
+                    //清空输入框信息并获取焦点
+                    $("#message").val('大家好，我是').focus();
+                })
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+
+
+        我是
+        <span id="connectionIdSpan"></span>
+        ，所属组别<input type="text" id="group" />
+        ，
+        <a href="javascript:connectToHost();">连接宿主</a>
+        <br /><br /><br />
+        ，我对
+        <select id="connectionIdsSelect"></select>
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" />
+        <div>消息列表</div>
+        <ul id="messageBox"></ul>
+        <div>用户列表</div>
+        <ul id="connectionIdsBox"></ul>
+    </div>
+</body>
+</html>
